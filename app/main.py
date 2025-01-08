@@ -3,18 +3,20 @@ import math
 
 
 class Vector:
-    def __init__(self, x: float, y: float) -> None:
-        self.x = round(x, 2)
-        self.y = round(y, 2)
+    def __init__(self, x_coordinate: float, y_coordinate: float) -> None:
+        self.x = round(x_coordinate, 2)
+        self.y = round(y_coordinate, 2)
 
     def __add__(self, other: Vector) -> Vector:
         if not isinstance(other, Vector):
-            raise TypeError(f"Unsupported operand type(s) for +: 'Vector' and '{type(other).__name__}'")
+            raise TypeError(f"Unsupported operand type(s) for +: "
+                            f" 'Vector' and '{type(other).__name__}'")
         return Vector(self.x + other.x, self.y + other.y)
 
     def __sub__(self, other: Vector) -> Vector:
         if not isinstance(other, Vector):
-            raise TypeError(f"Unsupported operand type(s) for -: 'Vector' and '{type(other).__name__}'")
+            raise TypeError(f"Unsupported operand type(s) for -: "
+                            f"'Vector' and '{type(other).__name__}'")
         return Vector(self.x - other.x, self.y - other.y)
 
     def __mul__(self, other: Vector | int | float) -> float | Vector:
@@ -23,17 +25,22 @@ class Vector:
         elif isinstance(other, Vector):
             return self.x * other.x + self.y * other.y
         else:
-            raise TypeError(f"Unsupported operand type(s) for *: 'Vector' and '{type(other).__name__}'")
+            raise TypeError(f"Unsupported operand type(s) for *: "
+                            f"'Vector' and '{type(other).__name__}'")
 
     @classmethod
-    def create_vector_by_two_points(cls, start_point: tuple, end_point: tuple) -> Vector:
-        if not (isinstance(start_point, tuple) and isinstance(end_point, tuple)):
+    def create_vector_by_two_points(cls,
+                                    start_point: tuple,
+                                    end_point: tuple) -> Vector:
+        if not (isinstance(start_point, tuple)
+                and isinstance(end_point, tuple)):
             raise ValueError("start_point and end_point must be tuples")
         if len(start_point) != 2 or len(end_point) != 2:
-            raise ValueError("start_point and end_point must have two coordinates each")
-        x = round(end_point[0] - start_point[0], 2)
-        y = round(end_point[1] - start_point[1], 2)
-        return cls(x, y)
+            raise ValueError("start_point and end_point"
+                             " must have two coordinates each")
+        x_coordinate = round(end_point[0] - start_point[0], 2)
+        y_coordinate = round(end_point[1] - start_point[1], 2)
+        return cls(x_coordinate, y_coordinate)
 
     def get_length(self) -> Vector:
         return (self.x ** 2 + self.y ** 2) ** 0.5
@@ -67,6 +74,8 @@ class Vector:
 
     def rotate(self, degrees: float) -> Vector:
         angle_rad = math.radians(degrees)
-        new_x = round(self.x * math.cos(angle_rad) - self.y * math.sin(angle_rad), 2)
-        new_y = round(self.x * math.sin(angle_rad) + self.y * math.cos(angle_rad), 2)
+        new_x = round(self.x * math.cos(angle_rad)
+                      - self.y * math.sin(angle_rad), 2)
+        new_y = round(self.x * math.sin(angle_rad)
+                      + self.y * math.cos(angle_rad), 2)
         return Vector(new_x, new_y)
